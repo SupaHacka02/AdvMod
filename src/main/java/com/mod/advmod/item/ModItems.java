@@ -1,6 +1,7 @@
 package com.mod.advmod.item;
 
 import com.mod.advmod.AdvMod;
+import com.mod.advmod.item.weapon.DynamiteStickItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,7 +18,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> DYNAMITE_STICK = ITEMS.register("dynamite_stick",
-            () -> new Item(new Item.Properties()));
+            () -> new DynamiteStickItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

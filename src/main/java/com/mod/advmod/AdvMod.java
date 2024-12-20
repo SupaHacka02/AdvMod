@@ -1,7 +1,10 @@
 package com.mod.advmod;
 
+import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,6 +29,8 @@ public class AdvMod {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
+
+        ModEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -58,6 +63,8 @@ public class AdvMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+
+            EntityRenderers.register(ModEntities.DYNAMITE_STICK_ENTITY.get(), ThrownItemRenderer::new);
 
         }
     }
