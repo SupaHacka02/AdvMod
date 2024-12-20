@@ -26,7 +26,7 @@ public class DynamiteStickEntity extends ThrowableItemProjectile {
     }
 
     protected void explode() {
-        this.level().explode(this, this.getX(), this.getY(0.0625), this.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
+        this.level().explode(this, this.getX(), this.getY(0.0625), this.getZ(), 2.0F, Level.ExplosionInteraction.TNT);
     }
 
     @Override
