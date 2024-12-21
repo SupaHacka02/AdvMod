@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "advmod:dynamite_stick"
+    }
+  },
+  "result": {
+    "id": "mincraft:tnt",
+    "count": 1
+  }
+}

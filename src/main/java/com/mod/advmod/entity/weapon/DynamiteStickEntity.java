@@ -22,7 +22,7 @@ public class DynamiteStickEntity extends ThrowableItemProjectile {
     }
 
     public DynamiteStickEntity(Level pLevel, LivingEntity livingEntity) {
-        super(ModEntities.DYNAMITE_STICK_ENTITY.get() , livingEntity, pLevel);
+        super(ModEntities.DYNAMITE_STICK_ENTITY.get(), livingEntity, pLevel);
     }
 
     protected void explode() {

@@ -1,6 +1,7 @@
 package com.mod.advmod.entity;
 
 import com.mod.advmod.AdvMod;
+import com.mod.advmod.entity.weapon.DynamiteBundleEntity;
 import com.mod.advmod.entity.weapon.DynamiteStickEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -18,6 +19,13 @@ public class ModEntities {
                     .updateInterval(20)
                     .sized(0.5f, 0.5f)
                     .build("dynamite_stick"));
+
+    public static final RegistryObject<EntityType<DynamiteBundleEntity>> DYNAMITE_BUNDLE_ENTITY =
+            ENTITY_TYPES.register("dynamite_bundle", () -> EntityType.Builder.<DynamiteBundleEntity>of(DynamiteBundleEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .sized(0.5f, 0.5f)
+                    .build("dynamite_bundle"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
