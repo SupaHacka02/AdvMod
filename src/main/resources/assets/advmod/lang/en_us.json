@@ -1,5 +1,8 @@
 {
   "item.advmod.reinforced_stick": "Reinforced Stick",
   "item.advmod.dynamite_stick": "Dynamite Stick",
-  "item.advmod.dynamite_bundle": "Dynamite Bundle"
+  "item.advmod.dynamite_bundle": "Dynamite Bundle",
+
+  "tooltip.advmod.dynamite_stick.tooltip": "Throwable Timed Explosive",
+  "tooltip.advmod.dynamite_bundle.tooltip": "Throwable Impact Explosive"
 }

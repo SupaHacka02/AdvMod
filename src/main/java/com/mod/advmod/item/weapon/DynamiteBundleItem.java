@@ -1,7 +1,7 @@
 package com.mod.advmod.item.weapon;
 
 import com.mod.advmod.entity.weapon.DynamiteBundleEntity;
-import com.mod.advmod.entity.weapon.DynamiteStickEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -10,9 +10,14 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class DynamiteBundleItem extends Item {
+
     public DynamiteBundleItem(Properties pProperties) {
         super(pProperties);
     }
@@ -31,5 +36,11 @@ public class DynamiteBundleItem extends Item {
         itemStack.consume(1, pPlayer);
 
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(Component.translatable("tooltip.advmod.dynamite_bundle.tooltip"));
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pIsAdvanced);
     }
 }
