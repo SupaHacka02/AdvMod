@@ -1,7 +1,6 @@
 package com.mod.advmod.item.weapon;
 
 import com.mod.advmod.entity.weapon.BunkerBusterEntity;
-import com.mod.advmod.entity.weapon.DynamiteBundleEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
