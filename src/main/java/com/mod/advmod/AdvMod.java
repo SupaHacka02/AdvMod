@@ -52,6 +52,7 @@ public class AdvMod {
         if(event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(ModItems.DYNAMITE_STICK);
             event.accept(ModItems.DYNAMITE_BUNDLE);
+            event.accept(ModItems.BUNKER_BUSTER);
         }
     }
 
@@ -67,6 +68,7 @@ public class AdvMod {
 
             EntityRenderers.register(ModEntities.DYNAMITE_STICK_ENTITY.get(), ThrownItemRenderer::new);
             EntityRenderers.register(ModEntities.DYNAMITE_BUNDLE_ENTITY.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntities.BUNKER_BUSTER_ENTITY.get(), ThrownItemRenderer::new);
 
         }
     }
