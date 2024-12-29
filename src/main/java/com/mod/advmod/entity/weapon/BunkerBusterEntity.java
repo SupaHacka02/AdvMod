@@ -2,6 +2,7 @@ package com.mod.advmod.entity.weapon;
 
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class BunkerBusterEntity extends ThrowableItemProjectile {
@@ -45,13 +47,15 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
             if(!this.start) {
                 this.start = true;
             }
-            this.explode(3.25f);
+            BlockPos blockPos = ((BlockHitResult)hitresult).getBlockPos();
+            this.level().destroyBlock(blockPos, false);
         }
         if(this.start) {
             this.blockBreakTicks--;
             if(this.blockBreakTicks <= 0) {
                 this.discard();
             }
+            this.explode(2.05f);
         }
     }
 
