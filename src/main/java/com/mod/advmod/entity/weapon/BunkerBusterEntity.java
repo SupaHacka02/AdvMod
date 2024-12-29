@@ -34,6 +34,7 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
         this.level().explode(this, this.getX(), this.getY(0.0625), this.getZ(), explosionSize, Level.ExplosionInteraction.TNT);
     }
 
+    @Override
     public void tick() {
         this.applyGravity();
         this.move(MoverType.SELF, this.getDeltaMovement());
