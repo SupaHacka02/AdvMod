@@ -41,7 +41,9 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
         HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if(hitresult.getType() == HitResult.Type.ENTITY) {
-            this.explode(6.5f);
+            if(!this.level().isClientSide) {
+                this.explode(6.5f);
+            }
             this.discard();
         }
         if(hitresult.getType() == HitResult.Type.BLOCK) {
@@ -56,7 +58,9 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
             if(this.blockBreakTicks <= 0) {
                 this.discard();
             }
-            this.explode(2.05f);
+            if(!this.level().isClientSide) {
+                this.explode(2.05f);
+            }
         }
     }
 

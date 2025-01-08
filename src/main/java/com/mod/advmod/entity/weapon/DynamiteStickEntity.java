@@ -38,7 +38,9 @@ public class DynamiteStickEntity extends ThrowableItemProjectile {
             this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
         }
         if(this.tickTillExplosion <= 0) {
-            this.explode();
+            if(!this.level().isClientSide) {
+                this.explode();
+            }
             this.discard();
         }
         this.tickTillExplosion--;

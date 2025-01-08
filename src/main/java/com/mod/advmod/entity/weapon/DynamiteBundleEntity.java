@@ -25,7 +25,9 @@ public class DynamiteBundleEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHit(HitResult hitResult) {
-        this.explode();
+        if(!level().isClientSide) {
+            this.explode();
+        }
         this.discard();
     }
 
