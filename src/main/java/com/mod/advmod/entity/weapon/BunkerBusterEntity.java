@@ -71,9 +71,13 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
                 this.discard();
             }
             if(!this.level().isClientSide) {
-                this.explode(2.05f);
+                this.explode(this.explosionRange());
             }
         }
+    }
+
+    private float explosionRange() {
+        return ((float)Math.random() * 3f) + 2.05f;
     }
 
     @Override
