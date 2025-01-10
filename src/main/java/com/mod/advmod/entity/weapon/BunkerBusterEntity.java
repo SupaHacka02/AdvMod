@@ -12,11 +12,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class BunkerBusterEntity extends ThrowableItemProjectile {
 
     private int blockBreakTicks = 40;
     private boolean start = false;
+    private boolean hitMovementFlag = false;
+    private Vec3 hitMovement;
 
     public BunkerBusterEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -38,7 +41,12 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
     public void tick() {
         this.applyGravity();
         this.move(MoverType.SELF, this.getDeltaMovement());
-        this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
+        if(!this.hitMovementFlag) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
+        } else {
+            this.setDeltaMovement(this.hitMovement);
+        }
+
         HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if(hitresult.getType() == HitResult.Type.ENTITY) {
             if(!this.level().isClientSide) {
@@ -49,6 +57,10 @@ public class BunkerBusterEntity extends ThrowableItemProjectile {
         if(hitresult.getType() == HitResult.Type.BLOCK) {
             if(!this.start) {
                 this.start = true;
+            }
+            if(!this.hitMovementFlag) {
+                this.hitMovement = this.getDeltaMovement();
+                this.hitMovementFlag = true;
             }
             BlockPos blockPos = ((BlockHitResult)hitresult).getBlockPos();
             this.level().destroyBlock(blockPos, false);
