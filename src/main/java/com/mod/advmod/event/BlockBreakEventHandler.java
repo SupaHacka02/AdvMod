@@ -17,9 +17,17 @@ public class BlockBreakEventHandler {
 
         if(event.getState().getBlock() == Blocks.BROWN_MUSHROOM) {
             if(!event.getLevel().isClientSide()) {
-                Creeper creeper = new Creeper(EntityType.CREEPER, (Level) event.getLevel());
-                creeper.setPos(event.getPos().getCenter());
-                event.getLevel().addFreshEntity(creeper);
+
+                int max = 10;
+                int min = 1;
+
+                int chance = (int) (Math.random() * (max - min + 1)) + min;
+
+                if(chance == 1) {
+                    Creeper creeper = new Creeper(EntityType.CREEPER, (Level) event.getLevel());
+                    creeper.setPos(event.getPos().getCenter());
+                    event.getLevel().addFreshEntity(creeper);
+                }
             }
         }
     }
