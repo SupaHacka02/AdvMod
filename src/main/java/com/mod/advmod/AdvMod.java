@@ -53,6 +53,7 @@ public class AdvMod {
             event.accept(ModItems.DYNAMITE_STICK);
             event.accept(ModItems.DYNAMITE_BUNDLE);
             event.accept(ModItems.BUNKER_BUSTER);
+            event.accept(ModItems.MUSKET_BALL);
         }
     }
 
