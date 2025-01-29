@@ -1,6 +1,7 @@
 package com.mod.advmod.item;
 
 import com.mod.advmod.AdvMod;
+import com.mod.advmod.item.weapon.MusketItem;
 import com.mod.advmod.item.weapon.BunkerBusterItem;
 import com.mod.advmod.item.weapon.DynamiteBundleItem;
 import com.mod.advmod.item.weapon.DynamiteStickItem;
@@ -31,6 +32,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> MUSKET_BALL = ITEMS.register("musket_ball",
             () -> new MusketBallItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> MUSKET = ITEMS.register("musket",
+            () -> new MusketItem(new Item.Properties().durability(196).stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -1,0 +1,6 @@
+{
+    "parent": "advmod:item/musket",
+    "textures": {
+        "layer0": "advmod:item/musket_pulling_1"
+    }
+}

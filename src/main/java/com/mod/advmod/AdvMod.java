@@ -2,6 +2,7 @@ package com.mod.advmod;
 
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
+import com.mod.advmod.util.ModItemProperties;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -54,6 +55,7 @@ public class AdvMod {
             event.accept(ModItems.DYNAMITE_BUNDLE);
             event.accept(ModItems.BUNKER_BUSTER);
             event.accept(ModItems.MUSKET_BALL);
+            event.accept(ModItems.MUSKET);
         }
     }
 
@@ -66,10 +68,12 @@ public class AdvMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ModItemProperties.addCustomProperties();
 
             EntityRenderers.register(ModEntities.DYNAMITE_STICK_ENTITY.get(), ThrownItemRenderer::new);
             EntityRenderers.register(ModEntities.DYNAMITE_BUNDLE_ENTITY.get(), ThrownItemRenderer::new);
             EntityRenderers.register(ModEntities.BUNKER_BUSTER_ENTITY.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntities.MUSKET_BALL_ENTITY.get(), ThrownItemRenderer::new);
 
         }
     }

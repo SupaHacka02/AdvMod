@@ -4,6 +4,7 @@ import com.mod.advmod.AdvMod;
 import com.mod.advmod.entity.weapon.BunkerBusterEntity;
 import com.mod.advmod.entity.weapon.DynamiteBundleEntity;
 import com.mod.advmod.entity.weapon.DynamiteStickEntity;
+import com.mod.advmod.entity.weapon.MusketBallEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,6 +35,13 @@ public class ModEntities {
                     .updateInterval(20)
                     .sized(0.5f, 0.5f)
                     .build("bunker_buster"));
+
+    public static final RegistryObject<EntityType<MusketBallEntity>> MUSKET_BALL_ENTITY =
+            ENTITY_TYPES.register("musket_ball", () -> EntityType.Builder.<MusketBallEntity>of(MusketBallEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .sized(0.5f, 0.5f)
+                    .build("musket_ball"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
