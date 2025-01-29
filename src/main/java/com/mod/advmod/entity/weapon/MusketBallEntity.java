@@ -2,6 +2,8 @@ package com.mod.advmod.entity.weapon;
 
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
+import net.minecraft.core.particles.ColorParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -34,6 +36,20 @@ public class MusketBallEntity extends ThrowableItemProjectile {
             this.discard();
         }
     }
+    @Override
+    public void tick() {
+        super.tick();
+        for (int i = 0; i < 10; i++) {
+            this.level().addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 255, 0, 0),
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    0.0,
+                    0.0,
+                    0.0);
+        }
+    }
+
     @Override
     protected Item getDefaultItem() {
         return ModItems.MUSKET_BALL.get();
