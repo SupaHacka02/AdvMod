@@ -29,7 +29,7 @@ public class MusketItem extends ProjectileWeaponItem {
                 i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(pStack, pLevel, player, i, true);
                 if (i < 0) return;
 
-                float f = getPowerForTime(i);
+                float f = this.getPowerForTime(i);
                 if( f >= 1 && !pLevel.isClientSide) {
                     MusketBallEntity mb = new MusketBallEntity(pLevel, player);
                     mb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 4.0F, 1.0F);
@@ -65,8 +65,8 @@ public class MusketItem extends ProjectileWeaponItem {
     ) {
         pProjectile.shootFromRotation(pShooter, pShooter.getXRot(), pShooter.getYRot() + pAngle, 0.0F, pVelocity, pInaccuracy);
     }
-    public static float getPowerForTime(int pCharge) {
-        float f = (float)pCharge / 20.0F;
+    private float getPowerForTime(int pCharge) {
+        float f = (float)pCharge / 50.0F;
         f = (f * f + f * 2.0F) / 3.0F;
         if (f > 1.0F) {
             f = 1.0F;
