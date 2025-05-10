@@ -56,6 +56,7 @@ public class AdvMod {
             event.accept(ModItems.BUNKER_BUSTER);
             event.accept(ModItems.MUSKET_BALL);
             event.accept(ModItems.MUSKET);
+            event.accept(ModItems.BLUNDERBUSS);
         }
     }
 

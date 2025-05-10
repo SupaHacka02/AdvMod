@@ -1,11 +1,7 @@
 package com.mod.advmod.item;
 
 import com.mod.advmod.AdvMod;
-import com.mod.advmod.item.weapon.MusketItem;
-import com.mod.advmod.item.weapon.BunkerBusterItem;
-import com.mod.advmod.item.weapon.DynamiteBundleItem;
-import com.mod.advmod.item.weapon.DynamiteStickItem;
-import com.mod.advmod.item.weapon.MusketBallItem;
+import com.mod.advmod.item.weapon.*;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,6 +31,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> MUSKET = ITEMS.register("musket",
             () -> new MusketItem(new Item.Properties().durability(196).stacksTo(1)));
+
+    public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss",
+            () -> new BlunderBussItem(new Item.Properties().durability(196).stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

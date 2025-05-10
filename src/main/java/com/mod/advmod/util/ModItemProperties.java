@@ -4,11 +4,11 @@ import com.mod.advmod.item.ModItems;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 public class ModItemProperties {
     public static void addCustomProperties() {
         makeCustomBow(ModItems.MUSKET.get());
+        makeCustomBow(ModItems.BLUNDERBUSS.get());
     }
 
     private static void makeCustomBow(Item item) {

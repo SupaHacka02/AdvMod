@@ -1,0 +1,6 @@
+{
+  "parent": "advmod:item/blunderbuss",
+  "textures": {
+    "layer0": "advmod:item/blunderbuss_pulling_0"
+  }
+}
