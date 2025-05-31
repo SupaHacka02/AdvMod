@@ -1,9 +1,7 @@
 package com.mod.advmod.item.weapon;
 
-import com.mod.advmod.entity.weapon.BirdShotPelletsEntity;
-import com.mod.advmod.entity.weapon.MusketBallEntity;
+import com.mod.advmod.entity.weapon.BirdShotPelletEntity;
 import com.mod.advmod.item.ModItems;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -67,17 +65,17 @@ public class BlunderBussItem extends ProjectileWeaponItem {
 
         Random rand = new Random();
 
-        BirdShotPelletsEntity bs1 = new BirdShotPelletsEntity(pLevel, player);
-        BirdShotPelletsEntity bs2 = new BirdShotPelletsEntity(pLevel, player);
-        BirdShotPelletsEntity bs3 = new BirdShotPelletsEntity(pLevel, player);
-        BirdShotPelletsEntity bs4 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletEntity bs1 = new BirdShotPelletEntity(pLevel, player);
+        BirdShotPelletEntity bs2 = new BirdShotPelletEntity(pLevel, player);
+        BirdShotPelletEntity bs3 = new BirdShotPelletEntity(pLevel, player);
+        BirdShotPelletEntity bs4 = new BirdShotPelletEntity(pLevel, player);
 
-        BirdShotPelletsEntity bs5 = new BirdShotPelletsEntity(pLevel, player);
-        BirdShotPelletsEntity bs6 = new BirdShotPelletsEntity(pLevel, player);
-        BirdShotPelletsEntity bs7 = new BirdShotPelletsEntity(pLevel, player);
-        BirdShotPelletsEntity bs8 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletEntity bs5 = new BirdShotPelletEntity(pLevel, player);
+        BirdShotPelletEntity bs6 = new BirdShotPelletEntity(pLevel, player);
+        BirdShotPelletEntity bs7 = new BirdShotPelletEntity(pLevel, player);
+        BirdShotPelletEntity bs8 = new BirdShotPelletEntity(pLevel, player);
 
-        BirdShotPelletsEntity bs9 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletEntity bs9 = new BirdShotPelletEntity(pLevel, player);
 
         bs1.shootFromRotation(player, player.getXRot() + 1 + rand.nextFloat(0, (float)0.5), player.getYRot(), 0.0F, 2.2F, 1.0F);
         bs2.shootFromRotation(player, player.getXRot() - 1 + rand.nextFloat((float) -0.5, 0), player.getYRot(), 0.0F, 2.2F, 1.0F);
@@ -130,7 +128,7 @@ public class BlunderBussItem extends ProjectileWeaponItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        boolean flag = pPlayer.getInventory().contains(new ItemStack(ModItems.MUSKET_BALL.get())) || pPlayer.isCreative();
+        boolean flag = pPlayer.getInventory().contains(new ItemStack(ModItems.BIRD_SHOT_PELLETS.get())) || pPlayer.isCreative();
         if (!pPlayer.hasInfiniteMaterials() && !flag) {
             return InteractionResultHolder.fail(itemstack);
         } else {

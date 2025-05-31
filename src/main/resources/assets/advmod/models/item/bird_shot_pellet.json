@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "advmod:item/bird_shot_pellets"
+    "layer0": "advmod:item/bird_shot_pellet"
   }
 }

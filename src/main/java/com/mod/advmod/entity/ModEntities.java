@@ -40,12 +40,12 @@ public class ModEntities {
                     .sized(0.5f, 0.5f)
                     .build("musket_ball"));
 
-    public static final RegistryObject<EntityType<BirdShotPelletsEntity>> BIRD_SHOT_PELLETS_ENTITY =
-            ENTITY_TYPES.register("bird_shot_pellets", () -> EntityType.Builder.<BirdShotPelletsEntity>of(BirdShotPelletsEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<BirdShotPelletEntity>> BIRD_SHOT_PELLET_ENTITY =
+            ENTITY_TYPES.register("bird_shot_pellet", () -> EntityType.Builder.<BirdShotPelletEntity>of(BirdShotPelletEntity::new, MobCategory.MISC)
                     .clientTrackingRange(4)
                     .updateInterval(20)
                     .sized(0.125f, 0.125f)
-                    .build("bird_shot_pellets"));
+                    .build("bird_shot_pellet"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

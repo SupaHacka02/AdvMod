@@ -23,22 +23,22 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 
-public class BirdShotPelletsEntity extends ThrowableItemProjectile {
+public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
-    private final int BASEDAMAGE = 1;
+    private final int BASEDAMAGE = 4;
     private Level lvl;
-    public BirdShotPelletsEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
+    public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.lvl = pLevel;
     }
 
-    public BirdShotPelletsEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel) {
+    public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel) {
         super(pEntityType, pX, pY, pZ, pLevel);
         this.lvl = pLevel;
     }
 
-    public BirdShotPelletsEntity(Level pLevel, LivingEntity livingEntity) {
-        super(ModEntities.BIRD_SHOT_PELLETS_ENTITY.get(), livingEntity, pLevel);
+    public BirdShotPelletEntity(Level pLevel, LivingEntity livingEntity) {
+        super(ModEntities.BIRD_SHOT_PELLET_ENTITY.get(), livingEntity, pLevel);
         this.lvl = pLevel;
     }
 
