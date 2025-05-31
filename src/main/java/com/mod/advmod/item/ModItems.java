@@ -28,6 +28,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> MUSKET_BALL = ITEMS.register("musket_ball",
             () -> new MusketBallItem(new Item.Properties()));
+    public static final RegistryObject<Item> BIRD_SHOT_PELLETS = ITEMS.register("bird_shot_pellets",
+            () -> new BirdShotPelletsItem(new Item.Properties()));
 
     public static final RegistryObject<Item> MUSKET = ITEMS.register("musket",
             () -> new MusketItem(new Item.Properties().durability(196).stacksTo(1)));

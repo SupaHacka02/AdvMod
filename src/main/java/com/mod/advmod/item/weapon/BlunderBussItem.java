@@ -1,7 +1,9 @@
 package com.mod.advmod.item.weapon;
 
+import com.mod.advmod.entity.weapon.BirdShotPelletsEntity;
 import com.mod.advmod.entity.weapon.MusketBallEntity;
 import com.mod.advmod.item.ModItems;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -15,6 +17,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class BlunderBussItem extends ProjectileWeaponItem {
@@ -25,16 +28,15 @@ public class BlunderBussItem extends ProjectileWeaponItem {
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player player) {
-            if (player.getInventory().contains(new ItemStack(ModItems.MUSKET_BALL.get())) || player.isCreative()) {
+            if (player.getInventory().contains(new ItemStack(ModItems.BIRD_SHOT_PELLETS.get())) || player.isCreative()) {
                 int i = this.getUseDuration(pStack) - pTimeLeft;
                 i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(pStack, pLevel, player, i, true);
                 if (i < 0) return;
 
                 float f = this.getPowerForTime(i);
                 if( f >= 1 && !pLevel.isClientSide) {
-                    MusketBallEntity mb = new MusketBallEntity(pLevel, player);
-                    mb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 4.0F, 1.0F);
-                    pLevel.addFreshEntity(mb);
+
+                    this.spawnPelletsCluster(pLevel, player);
 
                     pLevel.playSound(
                             null,
@@ -59,6 +61,48 @@ public class BlunderBussItem extends ProjectileWeaponItem {
                 }
             }
         }
+    }
+
+    private void spawnPelletsCluster(Level pLevel, Player player) {
+
+        Random rand = new Random();
+
+        BirdShotPelletsEntity bs1 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletsEntity bs2 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletsEntity bs3 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletsEntity bs4 = new BirdShotPelletsEntity(pLevel, player);
+
+        BirdShotPelletsEntity bs5 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletsEntity bs6 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletsEntity bs7 = new BirdShotPelletsEntity(pLevel, player);
+        BirdShotPelletsEntity bs8 = new BirdShotPelletsEntity(pLevel, player);
+
+        BirdShotPelletsEntity bs9 = new BirdShotPelletsEntity(pLevel, player);
+
+        bs1.shootFromRotation(player, player.getXRot() + 1 + rand.nextFloat(0, (float)0.5), player.getYRot(), 0.0F, 2.2F, 1.0F);
+        bs2.shootFromRotation(player, player.getXRot() - 1 + rand.nextFloat((float) -0.5, 0), player.getYRot(), 0.0F, 2.2F, 1.0F);
+        bs3.shootFromRotation(player, player.getXRot() + 2 + rand.nextFloat((float) -0.5, (float)0.5), player.getYRot(), 0.0F, 2.2F, 1.0F);
+        bs4.shootFromRotation(player, player.getXRot() - 2 + rand.nextFloat((float) -0.5, (float)0.5), player.getYRot(), 0.0F, 2.2F, 1.0F);
+
+        bs5.shootFromRotation(player, player.getXRot(), player.getYRot() + 1 + rand.nextFloat(0, (float)0.5), 0.0F, 2.2F, 1.0F);
+        bs6.shootFromRotation(player, player.getXRot(), player.getYRot() + 2 + rand.nextFloat((float) -0.5, (float)0.5), 0.0F, 2.2F, 1.0F);
+        bs7.shootFromRotation(player, player.getXRot(), player.getYRot() - 1 + rand.nextFloat((float) -0.5, 0), 0.0F, 2.2F, 1.0F);
+        bs8.shootFromRotation(player, player.getXRot(), player.getYRot() - 2 + rand.nextFloat((float) -0.5, (float)0.5), 0.0F, 2.2F, 1.0F);
+
+        bs9.shootFromRotation(player, player.getXRot() + rand.nextFloat((float) -0.25, (float)0.25), player.getYRot() + rand.nextFloat((float) -0.25, (float)0.25), 0.0F, 2.2F, 1.0F);
+
+        pLevel.addFreshEntity(bs1);
+        pLevel.addFreshEntity(bs2);
+        pLevel.addFreshEntity(bs3);
+        pLevel.addFreshEntity(bs4);
+
+        pLevel.addFreshEntity(bs5);
+        pLevel.addFreshEntity(bs6);
+        pLevel.addFreshEntity(bs7);
+        pLevel.addFreshEntity(bs8);
+
+        pLevel.addFreshEntity(bs9);
+
     }
     @Override
     protected void shootProjectile(

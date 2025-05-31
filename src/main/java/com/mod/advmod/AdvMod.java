@@ -55,6 +55,7 @@ public class AdvMod {
             event.accept(ModItems.DYNAMITE_BUNDLE);
             event.accept(ModItems.BUNKER_BUSTER);
             event.accept(ModItems.MUSKET_BALL);
+            event.accept(ModItems.BIRD_SHOT_PELLETS);
             event.accept(ModItems.MUSKET);
             event.accept(ModItems.BLUNDERBUSS);
         }
@@ -75,6 +76,7 @@ public class AdvMod {
             EntityRenderers.register(ModEntities.DYNAMITE_BUNDLE_ENTITY.get(), ThrownItemRenderer::new);
             EntityRenderers.register(ModEntities.BUNKER_BUSTER_ENTITY.get(), ThrownItemRenderer::new);
             EntityRenderers.register(ModEntities.MUSKET_BALL_ENTITY.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntities.BIRD_SHOT_PELLETS_ENTITY.get(), ThrownItemRenderer::new);
 
         }
     }

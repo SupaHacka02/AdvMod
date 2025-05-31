@@ -1,10 +1,7 @@
 package com.mod.advmod.entity;
 
 import com.mod.advmod.AdvMod;
-import com.mod.advmod.entity.weapon.BunkerBusterEntity;
-import com.mod.advmod.entity.weapon.DynamiteBundleEntity;
-import com.mod.advmod.entity.weapon.DynamiteStickEntity;
-import com.mod.advmod.entity.weapon.MusketBallEntity;
+import com.mod.advmod.entity.weapon.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -42,6 +39,13 @@ public class ModEntities {
                     .updateInterval(20)
                     .sized(0.5f, 0.5f)
                     .build("musket_ball"));
+
+    public static final RegistryObject<EntityType<BirdShotPelletsEntity>> BIRD_SHOT_PELLETS_ENTITY =
+            ENTITY_TYPES.register("bird_shot_pellets", () -> EntityType.Builder.<BirdShotPelletsEntity>of(BirdShotPelletsEntity::new, MobCategory.MISC)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .sized(0.125f, 0.125f)
+                    .build("bird_shot_pellets"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
