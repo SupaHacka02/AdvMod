@@ -1,4 +1,4 @@
-package com.mod.advmod.item.weapon;
+package com.mod.advmod.item.ammo;
 
 import net.minecraft.world.item.Item;
 

@@ -2,6 +2,7 @@ package com.mod.advmod.item.weapon;
 
 import com.mod.advmod.entity.weapon.MusketBallEntity;
 import com.mod.advmod.item.ModItems;
+import com.mod.advmod.item.ammo.MusketBallItem;
 import com.mod.advmod.util.PowderedWeaponType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -51,7 +52,8 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
                             pLevel.addFreshEntity(mb);
                             break;
                         case PowderedWeaponType.BLUNDERBUSS:
-                            PelletCluster.spawnPelletsCluster(pLevel, player);
+                            PelletCluster pc = new PelletCluster(pLevel, player, this.type);
+                            pc.spawnPelletCluster();
                     }
 
                     pLevel.playSound(

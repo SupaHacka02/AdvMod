@@ -1,6 +1,8 @@
 package com.mod.advmod.item;
 
 import com.mod.advmod.AdvMod;
+import com.mod.advmod.item.ammo.BirdShotPelletsItem;
+import com.mod.advmod.item.ammo.MusketBallItem;
 import com.mod.advmod.item.weapon.*;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
