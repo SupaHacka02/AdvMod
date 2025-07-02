@@ -15,6 +15,9 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, AdvMod.MODID);
 
+    public static final DeferredRegister<Item> DB =
+            DeferredRegister.create(ForgeRegistries.ITEMS, AdvMod.MODID);
+
 
     public static final RegistryObject<Item> REINFORCED_STICK = ITEMS.register("reinforced_stick",
             () -> new Item(new Item.Properties()));
@@ -38,6 +41,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss",
             () -> new BlunderBussItem(new Item.Properties().durability(196).stacksTo(1)));
+
+
+    public static final RegistryObject<Item> DOUBLEBARREL = DB.register("doublebarrel",
+            () -> new DoubleBarrelItem(new Item.Properties().durability(196).stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

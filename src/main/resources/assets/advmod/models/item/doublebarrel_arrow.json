@@ -1,0 +1,6 @@
+{
+  "parent": "advmod:item/doublebarrel",
+  "textures": {
+    "layer0": "advmod:item/doublebarrel_arrow"
+  }
+}
