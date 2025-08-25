@@ -7,6 +7,7 @@
   "item.advmod.bird_shot_pellets": "Bird Shot",
   "item.advmod.musket": "Musket",
   "item.advmod.blunderbuss": "Blunderbuss",
+  "item.advmod.auto_bow": "Auto Bow",
 
   "tooltip.advmod.dynamite_stick.tooltip": "Throwable Timed Explosive",
   "tooltip.advmod.dynamite_bundle.tooltip": "Throwable Impact Explosive",

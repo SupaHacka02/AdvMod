@@ -58,6 +58,7 @@ public class AdvMod {
             event.accept(ModItems.BIRD_SHOT_PELLETS);
             event.accept(ModItems.MUSKET);
             event.accept(ModItems.BLUNDERBUSS);
+            event.accept(ModItems.AUTO_BOW);
         }
     }
 
