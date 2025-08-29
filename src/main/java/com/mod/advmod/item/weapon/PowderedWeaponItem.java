@@ -3,6 +3,7 @@ package com.mod.advmod.item.weapon;
 import com.mod.advmod.entity.weapon.MusketBallEntity;
 import com.mod.advmod.item.ModItems;
 import com.mod.advmod.item.ammo.MusketBallItem;
+import com.mod.advmod.util.PowderedWeaponState;
 import com.mod.advmod.util.PowderedWeaponType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,6 +21,7 @@ import java.util.function.Predicate;
 abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
 
     private PowderedWeaponType type;
+    protected PowderedWeaponState state = PowderedWeaponState.EMPTY;
 
     public PowderedWeaponItem(Properties pProperties) {
         super(pProperties);
@@ -37,46 +39,55 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
 
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
+        /*
+            * If state is loaded, sheet, if not, do nothing?
+        */
         if (pEntityLiving instanceof Player player) {
-            if (player.getInventory().contains((this.type == PowderedWeaponType.MUSKET ? new ItemStack(ModItems.MUSKET_BALL.get()) : new ItemStack(ModItems.MUSKET_BALL.get())  )) || player.isCreative()) {
-                int i = this.getUseDuration(pStack) - pTimeLeft;
-                i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(pStack, pLevel, player, i, true);
-                if (i < 0) return;
+            switch (this.state) {
+                case LOADED:
+                    if (player.getInventory().contains((this.type == PowderedWeaponType.MUSKET ? new ItemStack(ModItems.MUSKET_BALL.get()) : new ItemStack(ModItems.MUSKET_BALL.get())  )) || player.isCreative()) {
 
-                float f = this.getPowerForTime(i, 50.0F);
-                if( f >= 1 && !pLevel.isClientSide) {
-                    switch (this.type) {
-                        case PowderedWeaponType.MUSKET:
-                            MusketBallEntity mb = new MusketBallEntity(pLevel, player);
-                            mb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 4.0F, 1.0F);
-                            pLevel.addFreshEntity(mb);
-                            break;
-                        case PowderedWeaponType.BLUNDERBUSS:
-                            PelletCluster pc = new PelletCluster(pLevel, player, this.type);
-                            pc.spawnPelletCluster();
-                    }
-
-                    pLevel.playSound(
-                            null,
-                            player.getX(),
-                            player.getY(),
-                            player.getZ(),
-                            SoundEvents.GENERIC_EXPLODE.get(),
-                            SoundSource.PLAYERS,
-                            1.0F,
-                            1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
-                    );
-                    if (!player.isCreative()) {
-                        for (int k = 0; k < player.getInventory().getContainerSize(); k++) {
-                            ItemStack item = player.getInventory().getItem(k);
-                            if (!item.isEmpty() && item.getItem() instanceof MusketBallItem) {
-                                item.shrink(1);
-                                player.getInventory().setChanged();
-                                break;
+                            pLevel.playSound(
+                                    null,
+                                    player.getX(),
+                                    player.getY(),
+                                    player.getZ(),
+                                    SoundEvents.GENERIC_EXPLODE.get(),
+                                    SoundSource.PLAYERS,
+                                    1.0F,
+                                    1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 1 * 0.5F
+                            );
+                            this.state = PowderedWeaponState.EMPTY;
+                            if (!player.isCreative()) {
+                                for (int k = 0; k < player.getInventory().getContainerSize(); k++) {
+                                    ItemStack item = player.getInventory().getItem(k);
+                                    if (!item.isEmpty() && item.getItem() instanceof MusketBallItem) {
+                                        item.shrink(1);
+                                        player.getInventory().setChanged();
+                                        break;
+                                    }
+                                }
                             }
                         }
+                case EMPTY:
+                    int i = this.getUseDuration(pStack) - pTimeLeft;
+                    i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(pStack, pLevel, player, i, true);
+                    if (i < 0) return;
+
+                    float f = this.getPowerForTime(i, 50.0F);
+                    if( f >= 1 && !pLevel.isClientSide) {
+                        switch (this.type) {
+                            case PowderedWeaponType.MUSKET:
+                                MusketBallEntity mb = new MusketBallEntity(pLevel, player);
+                                mb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 4.0F, 1.0F);
+                                pLevel.addFreshEntity(mb);
+                                break;
+                            case PowderedWeaponType.BLUNDERBUSS:
+                                PelletCluster pc = new PelletCluster(pLevel, player, this.type);
+                                pc.spawnPelletCluster();
+                        }
+                        this.state = PowderedWeaponState.LOADED;
                     }
-                }
             }
         }
     }

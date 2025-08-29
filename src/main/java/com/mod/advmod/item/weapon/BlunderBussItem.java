@@ -1,6 +1,7 @@
 package com.mod.advmod.item.weapon;
 
 import com.mod.advmod.item.ModItems;
+import com.mod.advmod.util.PowderedWeaponState;
 import com.mod.advmod.util.PowderedWeaponType;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,13 +16,25 @@ public class BlunderBussItem extends PowderedWeaponItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
+        System.out.println(this.state);
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        boolean flag = pPlayer.getInventory().contains(new ItemStack(ModItems.BIRD_SHOT_PELLETS.get())) || pPlayer.isCreative();
-        if (!pPlayer.hasInfiniteMaterials() && !flag) {
-            return InteractionResultHolder.fail(itemstack);
-        } else {
-            pPlayer.startUsingItem(pHand);
-            return InteractionResultHolder.consume(itemstack);
+        switch (this.state) {
+            case EMPTY -> {
+                boolean flag = pPlayer.getInventory().contains(new ItemStack(ModItems.BIRD_SHOT_PELLETS.get())) || pPlayer.isCreative();
+                if (!pPlayer.hasInfiniteMaterials() && !flag) {
+                    this.state = PowderedWeaponState.LOADED;
+                    return InteractionResultHolder.fail(itemstack);
+                } else {
+                    pPlayer.startUsingItem(pHand);
+                    this.state = PowderedWeaponState.LOADED;
+                    return InteractionResultHolder.consume(itemstack);
+                }
+            }
+            case FIRED -> {
+                this.state = PowderedWeaponState.EMPTY;
+                return InteractionResultHolder.fail(itemstack);
+            }
         }
+        return InteractionResultHolder.fail(itemstack);
     }
 }
