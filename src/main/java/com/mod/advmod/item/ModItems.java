@@ -39,6 +39,9 @@ public class ModItems {
     public static final RegistryObject<Item> BLUNDERBUSS = ITEMS.register("blunderbuss",
             () -> new BlunderBussItem(new Item.Properties().durability(196).stacksTo(1)));
 
+    public static final RegistryObject<Item> LONGBOW = ITEMS.register("longbow",
+            () -> new LongBow(new Item.Properties().durability(196).stacksTo(1)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
