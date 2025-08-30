@@ -17,6 +17,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -26,6 +27,8 @@ import net.minecraft.world.phys.Vec3;
 public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     private final int BASEDAMAGE = 4;
+    private final int MAX_TIME = 45;
+    private volatile int time = 0;
     private Level lvl;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -106,11 +109,17 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
+        if(this.time != this.MAX_TIME ) {
+            this.lvl.destroyBlock(pResult.getBlockPos(), true);
+        }
         this.discard();
     }
     @Override
     public void tick() {
         super.tick();
+        if(this.time < this.MAX_TIME) {
+            this.time++;
+        }
         for (int i = 0; i < 10; i++) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                     true,
