@@ -2,6 +2,8 @@ package com.mod.advmod.entity.weapon;
 
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,7 +19,10 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -27,9 +32,10 @@ import net.minecraft.world.phys.Vec3;
 public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     private final int BASEDAMAGE = 4;
-    private final int MAX_TIME = 45;
     private volatile int time = 0;
     private Level lvl;
+    private double speed;
+    private final int GRACE = 5;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.lvl = pLevel;
@@ -109,17 +115,25 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
-        if(this.time != this.MAX_TIME ) {
-            this.lvl.destroyBlock(pResult.getBlockPos(), true);
+        if(!this.level().isClientSide) {
+            if(this.speed >= 2.1 || this.time < this.GRACE) {
+                this.lvl.destroyBlock(pResult.getBlockPos(), true);
+            } else { // this will be an enchantment
+                BlockPos blockPos = pResult.getBlockPos();
+                BlockPos newPos = new BlockPos(new Vec3i(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ()));
+                this.level().setBlockAndUpdate(newPos, BaseFireBlock.getState(this.level(), newPos));
+            }
         }
+
         this.discard();
     }
     @Override
     public void tick() {
         super.tick();
-        if(this.time < this.MAX_TIME) {
+        if(this.time < this.GRACE) {
             this.time++;
         }
+        this.updateVelocity();
         for (int i = 0; i < 10; i++) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                     true,
@@ -135,5 +149,8 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     @Override
     protected Item getDefaultItem() {
         return ModItems.BIRD_SHOT_PELLETS.get();
+    }
+    private void updateVelocity() {
+        this.speed = Math.sqrt(Math.pow((this.getX() - this.xOld), 2) + Math.pow((this.getY() - this.yOld), 2) + Math.pow((this.getZ() - this.zOld), 2));
     }
 }
