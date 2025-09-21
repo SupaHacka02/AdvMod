@@ -1,5 +1,6 @@
 package com.mod.advmod;
 
+import com.mod.advmod.enchantment.ModEnchantments;
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
 import com.mod.advmod.util.ModItemProperties;
@@ -32,6 +33,8 @@ public class AdvMod {
         ModItems.register(modEventBus);
 
         ModEntities.register(modEventBus);
+
+        ModEnchantments.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 

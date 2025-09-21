@@ -12,6 +12,8 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -38,7 +40,7 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player player) {
-            if (player.getInventory().contains((this.type == PowderedWeaponType.MUSKET ? new ItemStack(ModItems.MUSKET_BALL.get()) : new ItemStack(ModItems.MUSKET_BALL.get())  )) || player.isCreative()) {
+            if (player.getInventory().contains((this.type == PowderedWeaponType.MUSKET ? new ItemStack(ModItems.MUSKET_BALL.get()) : new ItemStack(ModItems.BIRD_SHOT_PELLETS.get())  )) || player.isCreative()) {
                 int i = this.getUseDuration(pStack) - pTimeLeft;
                 i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(pStack, pLevel, player, i, true);
                 if (i < 0) return;
@@ -53,6 +55,7 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
                             break;
                         case PowderedWeaponType.BLUNDERBUSS:
                             PelletCluster pc = new PelletCluster(pLevel, player, this.type);
+                            //EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, pStack);
                             pc.spawnPelletCluster();
                     }
 

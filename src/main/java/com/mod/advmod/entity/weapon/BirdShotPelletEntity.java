@@ -35,7 +35,11 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     private volatile int time = 0;
     private Level lvl;
     private double speed;
-    private final int GRACE = 5;
+    public final int GRACE = 5;
+    public final int GRACE2 = 20;
+    public volatile int time2 = 0;
+    public boolean flag = false;
+    private BlockPos blockHitPos;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.lvl = pLevel;
@@ -51,14 +55,14 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
         this.lvl = pLevel;
     }
 
-    @Override
-    protected void onHit(HitResult pResult) {
-        super.onHit(pResult);
-        if (!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, (byte)3);
-            this.discard();
-        }
-    }
+//    @Override
+//    protected void onHit(HitResult pResult) {
+//        super.onHit(pResult);
+//        if (!this.level().isClientSide) {
+//            this.level().broadcastEntityEvent(this, (byte)3);
+//            this.discard();
+//        }
+//    }
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
@@ -115,23 +119,33 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
-        if(!this.level().isClientSide) {
-            if(this.speed >= 2.1 || this.time < this.GRACE) {
-                this.lvl.destroyBlock(pResult.getBlockPos(), true);
-            } else { // this will be an enchantment
-                BlockPos blockPos = pResult.getBlockPos();
-                BlockPos newPos = new BlockPos(new Vec3i(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ()));
-                this.level().setBlockAndUpdate(newPos, BaseFireBlock.getState(this.level(), newPos));
-            }
+//        if(!this.level().isClientSide) {
+//            if(this.speed >= 2.1 || this.time < this.GRACE) {
+//                this.lvl.destroyBlock(pResult.getBlockPos(), true);
+//            } else { // this will be an enchantment
+//                BlockPos blockPos = pResult.getBlockPos();
+//                BlockPos newPos = new BlockPos(new Vec3i(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ()));
+//                this.level().setBlockAndUpdate(newPos, BaseFireBlock.getState(this.level(), newPos));
+//            }
+//        }
+        if(!this.flag) {
+            this.blockHitPos = pResult.getBlockPos();
+            this.flag = true;
         }
-
-        this.discard();
+        System.out.println("Set to true");
     }
     @Override
     public void tick() {
         super.tick();
         if(this.time < this.GRACE) {
             this.time++;
+        }
+        if (this.flag && (this.time2 < this.GRACE2)) {
+            this.time2++;
+            System.out.println("Breaking");
+        }
+        if (this.time2 >= this.GRACE2) {
+            this.discard();
         }
         this.updateVelocity();
         for (int i = 0; i < 10; i++) {
@@ -152,5 +166,18 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     }
     private void updateVelocity() {
         this.speed = Math.sqrt(Math.pow((this.getX() - this.xOld), 2) + Math.pow((this.getY() - this.yOld), 2) + Math.pow((this.getZ() - this.zOld), 2));
+    }
+
+    public double getSpeed() {
+        return this.speed;
+    }
+    public int getTime() {
+        return this.time;
+    }
+    public Level getLvl() {
+        return this.lvl;
+    }
+    public BlockPos getBlockHitPos() {
+        return this.blockHitPos;
     }
 }

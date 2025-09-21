@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 public class BlunderBussItem extends PowderedWeaponItem {
     public BlunderBussItem(Properties pProperties) {
@@ -16,6 +17,7 @@ public class BlunderBussItem extends PowderedWeaponItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        itemstack.getEnchantments();
         boolean flag = pPlayer.getInventory().contains(new ItemStack(ModItems.BIRD_SHOT_PELLETS.get())) || pPlayer.isCreative();
         if (!pPlayer.hasInfiniteMaterials() && !flag) {
             return InteractionResultHolder.fail(itemstack);
