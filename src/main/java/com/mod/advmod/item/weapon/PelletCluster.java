@@ -15,18 +15,20 @@ public class PelletCluster {
     private int capacity;
     private PowderedWeaponType type;
     private BirdShotPelletEntity[] bsa;
-    public PelletCluster(Level level, Player player, PowderedWeaponType type) {
+    private boolean hasWallBreaker;
+    public PelletCluster(Level level, Player player, PowderedWeaponType type, boolean wb) {
         this.level = level;
         this.player = player;
         this.rand = new Random();
         this.type = type;
         this.capacity = !this.type.equals(PowderedWeaponType.DOUBLEBARREL) ? 9 : 17;
         this.bsa = new BirdShotPelletEntity[capacity];
+        this.hasWallBreaker = wb;
     }
     protected void spawnPelletCluster() {
 
         for (int i = 0; i < capacity; i++) {
-            bsa[i] = new BirdShotPelletEntity(level, player);
+            bsa[i] = new BirdShotPelletEntity(level, player, hasWallBreaker);
         }
 
         bsa[0].shootFromRotation(player, player.getXRot() + 1 + rand.nextFloat(0, (float)0.5), player.getYRot(), 0.0F, 2.2F, 1.0F);

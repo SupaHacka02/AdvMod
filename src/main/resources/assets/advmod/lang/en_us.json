@@ -10,5 +10,8 @@
 
   "tooltip.advmod.dynamite_stick.tooltip": "Throwable Timed Explosive",
   "tooltip.advmod.dynamite_bundle.tooltip": "Throwable Impact Explosive",
-  "tooltip.advmod.bunker_buster.tooltip": "Throwable Ricocheting Explosive"
+  "tooltip.advmod.bunker_buster.tooltip": "Throwable Ricocheting Explosive",
+
+  "enchantment.advmod.wall_breaker": "Wall Breaker",
+  "enchantment.advmod.dragons_breath": "Dragons Breath"
 }

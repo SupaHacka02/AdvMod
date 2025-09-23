@@ -2,6 +2,7 @@ package com.mod.advmod.entity.weapon;
 
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
+import com.mod.advmod.util.TwentySevenBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
@@ -40,19 +41,19 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     public volatile int time2 = 0;
     public boolean flag = false;
     private BlockPos blockHitPos;
+    private boolean hasWallBreaker = false;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.lvl = pLevel;
     }
-
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel) {
         super(pEntityType, pX, pY, pZ, pLevel);
         this.lvl = pLevel;
     }
-
-    public BirdShotPelletEntity(Level pLevel, LivingEntity livingEntity) {
+    public BirdShotPelletEntity(Level pLevel, LivingEntity livingEntity, boolean wb) {
         super(ModEntities.BIRD_SHOT_PELLET_ENTITY.get(), livingEntity, pLevel);
         this.lvl = pLevel;
+        this.hasWallBreaker = wb;
     }
 
 //    @Override
@@ -128,11 +129,17 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
 //                this.level().setBlockAndUpdate(newPos, BaseFireBlock.getState(this.level(), newPos));
 //            }
 //        }
+        if (this.isHasWallBreaker()) { //bs.getSpeed() >= 2.1 || bs.getTime() < bs.GRACE
+            System.out.println("2");
+            TwentySevenBlocks tb = new TwentySevenBlocks(this.level(), pResult.getBlockPos());
+            tb.destroySmallCrossAndDrop();
+            //bs.level().destroyBlock(bs.getBlockHitPos(), true);
+        }
         if(!this.flag) {
             this.blockHitPos = pResult.getBlockPos();
             this.flag = true;
         }
-        System.out.println("Set to true");
+        this.discard();
     }
     @Override
     public void tick() {
@@ -140,13 +147,12 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
         if(this.time < this.GRACE) {
             this.time++;
         }
-        if (this.flag && (this.time2 < this.GRACE2)) {
-            this.time2++;
-            System.out.println("Breaking");
-        }
-        if (this.time2 >= this.GRACE2) {
-            this.discard();
-        }
+//        if (this.flag && (this.time2 < this.GRACE2)) {
+//            this.time2++;
+//        }
+//        if (this.time2 >= this.GRACE2) {
+//            this.discard();
+//        }
         this.updateVelocity();
         for (int i = 0; i < 10; i++) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
@@ -179,5 +185,8 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     }
     public BlockPos getBlockHitPos() {
         return this.blockHitPos;
+    }
+    public boolean isHasWallBreaker() {
+        return this.hasWallBreaker;
     }
 }

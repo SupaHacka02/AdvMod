@@ -1,5 +1,6 @@
 package com.mod.advmod.item.weapon;
 
+import com.mod.advmod.enchantment.ModEnchantments;
 import com.mod.advmod.entity.weapon.MusketBallEntity;
 import com.mod.advmod.item.ModItems;
 import com.mod.advmod.item.ammo.MusketBallItem;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -54,7 +56,8 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
                             pLevel.addFreshEntity(mb);
                             break;
                         case PowderedWeaponType.BLUNDERBUSS:
-                            PelletCluster pc = new PelletCluster(pLevel, player, this.type);
+                            int wb = pStack.getEnchantmentLevel(ModEnchantments.WALL_BREAKER.get());
+                            PelletCluster pc = new PelletCluster(pLevel, player, this.type, wb >= 1 ? true :false);
                             //EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, pStack);
                             pc.spawnPelletCluster();
                     }

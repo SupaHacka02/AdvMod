@@ -135,4 +135,17 @@ public class TwentySevenBlocks {
         this.level.destroyBlock(this.b17, true);
         this.level.destroyBlock(this.b23, true);
     }
+    public void destroySpinnerShapeAndDrop() {
+        this.level.destroyBlock(this.b5, true);
+        this.level.destroyBlock(this.b10, true);
+        this.level.destroyBlock(this.b11, true);
+        this.level.destroyBlock(this.b12, true);
+        this.level.destroyBlock(this.b13, true);
+        this.level.destroyBlock(this.b14, true);
+        this.level.destroyBlock(this.b15, true);
+        this.level.destroyBlock(this.b16, true);
+        this.level.destroyBlock(this.b17, true);
+        this.level.destroyBlock(this.b18, true);
+        this.level.destroyBlock(this.b23, true);
+    }
 }
