@@ -23,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -42,6 +43,7 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     public boolean flag = false;
     private BlockPos blockHitPos;
     private boolean hasWallBreaker = false;
+    private boolean hasDragonsBreath = false;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.lvl = pLevel;
@@ -50,10 +52,11 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
         super(pEntityType, pX, pY, pZ, pLevel);
         this.lvl = pLevel;
     }
-    public BirdShotPelletEntity(Level pLevel, LivingEntity livingEntity, boolean wb) {
+    public BirdShotPelletEntity(Level pLevel, LivingEntity livingEntity, boolean wb, boolean db) {
         super(ModEntities.BIRD_SHOT_PELLET_ENTITY.get(), livingEntity, pLevel);
         this.lvl = pLevel;
         this.hasWallBreaker = wb;
+        this.hasDragonsBreath = db;
     }
 
 //    @Override
@@ -97,6 +100,11 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
             if (entity instanceof LivingEntity) {
                 LivingEntity livingentity = (LivingEntity)entity;
 
+                if (this.isHasDragonsBreath()) {
+                    entity.setRemainingFireTicks(800);
+                    entity.setSharedFlagOnFire(true);
+                }
+
 
                 if (!this.level().isClientSide && entity1 instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
@@ -130,10 +138,13 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
 //            }
 //        }
         if (this.isHasWallBreaker()) { //bs.getSpeed() >= 2.1 || bs.getTime() < bs.GRACE
-            System.out.println("2");
             TwentySevenBlocks tb = new TwentySevenBlocks(this.level(), pResult.getBlockPos());
             tb.destroySmallCrossAndDrop();
-            //bs.level().destroyBlock(bs.getBlockHitPos(), true);
+        }
+        if (this.isHasDragonsBreath()) { //bs.getSpeed() >= 2.1 || bs.getTime() < bs.GRACE
+            BlockPos pos = pResult.getBlockPos().above();
+            BlockState bs = BaseFireBlock.getState(this.level(), pos);
+            this.level().setBlockAndUpdate(pos, bs);
         }
         if(!this.flag) {
             this.blockHitPos = pResult.getBlockPos();
@@ -188,5 +199,8 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     }
     public boolean isHasWallBreaker() {
         return this.hasWallBreaker;
+    }
+    public boolean isHasDragonsBreath() {
+        return this.hasDragonsBreath;
     }
 }

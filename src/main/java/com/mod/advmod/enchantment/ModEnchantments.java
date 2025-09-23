@@ -19,6 +19,9 @@ public class ModEnchantments {
     public static final RegistryObject<Enchantment> WALL_BREAKER = ENCHANTMENTS.register(
             "wall_breaker",
             () -> new WallBreakerEnchantment(Enchantment.definition(ItemTags.WEAPON_ENCHANTABLE, ModTags.blunderbussTag, 1, 1, Enchantment.dynamicCost(1, 11), Enchantment.dynamicCost(21, 11), 4, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
+    public static final RegistryObject<Enchantment> DRAGONS_BREATH = ENCHANTMENTS.register(
+            "dragons_breath",
+            () -> new DragonsBreathEnchantment(Enchantment.definition(ItemTags.WEAPON_ENCHANTABLE, ModTags.blunderbussTag, 1, 1, Enchantment.dynamicCost(1, 11), Enchantment.dynamicCost(21, 11), 4, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
     public static void register(IEventBus eventBus) {
         ENCHANTMENTS.register(eventBus);
     }

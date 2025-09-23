@@ -16,7 +16,8 @@ public class PelletCluster {
     private PowderedWeaponType type;
     private BirdShotPelletEntity[] bsa;
     private boolean hasWallBreaker;
-    public PelletCluster(Level level, Player player, PowderedWeaponType type, boolean wb) {
+    private boolean hasDragonsBreath;
+    public PelletCluster(Level level, Player player, PowderedWeaponType type, boolean wb, boolean db) {
         this.level = level;
         this.player = player;
         this.rand = new Random();
@@ -24,11 +25,16 @@ public class PelletCluster {
         this.capacity = !this.type.equals(PowderedWeaponType.DOUBLEBARREL) ? 9 : 17;
         this.bsa = new BirdShotPelletEntity[capacity];
         this.hasWallBreaker = wb;
+        this.hasDragonsBreath = db;
     }
     protected void spawnPelletCluster() {
 
         for (int i = 0; i < capacity; i++) {
-            bsa[i] = new BirdShotPelletEntity(level, player, hasWallBreaker);
+            bsa[i] = new BirdShotPelletEntity(level, player, hasWallBreaker, hasDragonsBreath);
+            if(hasDragonsBreath) {
+                bsa[i].setRemainingFireTicks(800);
+                bsa[i].setSharedFlagOnFire(true);
+            }
         }
 
         bsa[0].shootFromRotation(player, player.getXRot() + 1 + rand.nextFloat(0, (float)0.5), player.getYRot(), 0.0F, 2.2F, 1.0F);

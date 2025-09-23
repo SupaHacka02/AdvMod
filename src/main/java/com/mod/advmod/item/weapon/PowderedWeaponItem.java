@@ -57,7 +57,8 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
                             break;
                         case PowderedWeaponType.BLUNDERBUSS:
                             int wb = pStack.getEnchantmentLevel(ModEnchantments.WALL_BREAKER.get());
-                            PelletCluster pc = new PelletCluster(pLevel, player, this.type, wb >= 1 ? true :false);
+                            int db = pStack.getEnchantmentLevel(ModEnchantments.DRAGONS_BREATH.get());
+                            PelletCluster pc = new PelletCluster(pLevel, player, this.type, wb >= 1 ? true : false, db >= 1 ? true :false);
                             //EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, pStack);
                             pc.spawnPelletCluster();
                     }
