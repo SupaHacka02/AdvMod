@@ -31,21 +31,16 @@ import net.minecraft.world.phys.Vec3;
 public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     private final int BASEDAMAGE = 2;
-    private Level lvl;
-    public final int GRACE = 5;
     private boolean hasWallBreaker = false;
     private boolean hasDragonsBreath = false;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.lvl = pLevel;
     }
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, double pX, double pY, double pZ, Level pLevel) {
         super(pEntityType, pX, pY, pZ, pLevel);
-        this.lvl = pLevel;
     }
     public BirdShotPelletEntity(Level pLevel, LivingEntity livingEntity, boolean wb, boolean db) {
         super(ModEntities.BIRD_SHOT_PELLET_ENTITY.get(), livingEntity, pLevel);
-        this.lvl = pLevel;
         this.hasWallBreaker = wb;
         this.hasDragonsBreath = db;
     }
@@ -53,7 +48,7 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
 
-        Arrow arrow = new Arrow(EntityType.ARROW, this.lvl);
+        Arrow arrow = new Arrow(EntityType.ARROW, this.level());
         Entity entity = pResult.getEntity();
         LivingEntity entity2 = (LivingEntity) entity;
         double d0 = Math.max(0.0, 1.0 - entity2.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
@@ -119,7 +114,7 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
         }
         if (this.isHasDragonsBreath()) { //bs.getSpeed() >= 2.1 || bs.getTime() < bs.GRACE
             if (!IndestructibleBlocks.blocks.contains(this.level().getBlockState(pos).getBlock()) && (
-                    this.level().getBlockState(pos).getBlock() == Blocks.AIR)) {
+                    this.level().getBlockState(pos.above()).getBlock() == Blocks.AIR)) {
                 this.level().setBlockAndUpdate(pos.above(), bs);
             }
         }
