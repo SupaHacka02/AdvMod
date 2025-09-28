@@ -2,9 +2,9 @@ package com.mod.advmod.entity.weapon;
 
 import com.mod.advmod.entity.ModEntities;
 import com.mod.advmod.item.ModItems;
+import com.mod.advmod.util.IndestructibleBlocks;
 import com.mod.advmod.util.TwentySevenBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,27 +21,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FireBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 
 public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
-    private final int BASEDAMAGE = 4;
-    private volatile int time = 0;
+    private final int BASEDAMAGE = 2;
     private Level lvl;
-    private double speed;
     public final int GRACE = 5;
-    public final int GRACE2 = 20;
-    public volatile int time2 = 0;
-    public boolean flag = false;
-    private BlockPos blockHitPos;
     private boolean hasWallBreaker = false;
     private boolean hasDragonsBreath = false;
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
@@ -58,16 +49,6 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
         this.hasWallBreaker = wb;
         this.hasDragonsBreath = db;
     }
-
-//    @Override
-//    protected void onHit(HitResult pResult) {
-//        super.onHit(pResult);
-//        if (!this.level().isClientSide) {
-//            this.level().broadcastEntityEvent(this, (byte)3);
-//            this.discard();
-//        }
-//    }
-
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
@@ -128,43 +109,25 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
-//        if(!this.level().isClientSide) {
-//            if(this.speed >= 2.1 || this.time < this.GRACE) {
-//                this.lvl.destroyBlock(pResult.getBlockPos(), true);
-//            } else { // this will be an enchantment
-//                BlockPos blockPos = pResult.getBlockPos();
-//                BlockPos newPos = new BlockPos(new Vec3i(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ()));
-//                this.level().setBlockAndUpdate(newPos, BaseFireBlock.getState(this.level(), newPos));
-//            }
-//        }
+        BlockPos pos = pResult.getBlockPos();
+        BlockState bs = BaseFireBlock.getState(this.level(), pos.above());
         if (this.isHasWallBreaker()) { //bs.getSpeed() >= 2.1 || bs.getTime() < bs.GRACE
             TwentySevenBlocks tb = new TwentySevenBlocks(this.level(), pResult.getBlockPos());
-            tb.destroySmallCrossAndDrop();
+            if (!IndestructibleBlocks.blocks.contains(this.level().getBlockState(pos).getBlock())) {
+                tb.destroySmallCrossAndDrop();
+            }
         }
         if (this.isHasDragonsBreath()) { //bs.getSpeed() >= 2.1 || bs.getTime() < bs.GRACE
-            BlockPos pos = pResult.getBlockPos().above();
-            BlockState bs = BaseFireBlock.getState(this.level(), pos);
-            this.level().setBlockAndUpdate(pos, bs);
-        }
-        if(!this.flag) {
-            this.blockHitPos = pResult.getBlockPos();
-            this.flag = true;
+            if (!IndestructibleBlocks.blocks.contains(this.level().getBlockState(pos).getBlock()) && (
+                    this.level().getBlockState(pos).getBlock() == Blocks.AIR)) {
+                this.level().setBlockAndUpdate(pos.above(), bs);
+            }
         }
         this.discard();
     }
     @Override
     public void tick() {
         super.tick();
-        if(this.time < this.GRACE) {
-            this.time++;
-        }
-//        if (this.flag && (this.time2 < this.GRACE2)) {
-//            this.time2++;
-//        }
-//        if (this.time2 >= this.GRACE2) {
-//            this.discard();
-//        }
-        this.updateVelocity();
         for (int i = 0; i < 10; i++) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                     true,
@@ -180,22 +143,6 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
     @Override
     protected Item getDefaultItem() {
         return ModItems.BIRD_SHOT_PELLETS.get();
-    }
-    private void updateVelocity() {
-        this.speed = Math.sqrt(Math.pow((this.getX() - this.xOld), 2) + Math.pow((this.getY() - this.yOld), 2) + Math.pow((this.getZ() - this.zOld), 2));
-    }
-
-    public double getSpeed() {
-        return this.speed;
-    }
-    public int getTime() {
-        return this.time;
-    }
-    public Level getLvl() {
-        return this.lvl;
-    }
-    public BlockPos getBlockHitPos() {
-        return this.blockHitPos;
     }
     public boolean isHasWallBreaker() {
         return this.hasWallBreaker;
