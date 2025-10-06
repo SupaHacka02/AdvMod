@@ -36,7 +36,6 @@ abstract public class PowderedWeaponItem extends ProjectileWeaponItem {
     public UseAnim getUseAnimation(ItemStack pStack) {
         return UseAnim.BOW;
     }
-
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
         return ARROW_ONLY;

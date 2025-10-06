@@ -39,7 +39,8 @@ public class BlunderBussItem extends PowderedWeaponItem {
                 if( f >= 1 && !pLevel.isClientSide) {
                     int wb = pStack.getEnchantmentLevel(ModEnchantments.WALL_BREAKER.get());
                     int db = pStack.getEnchantmentLevel(ModEnchantments.DRAGONS_BREATH.get());
-                    PelletCluster pc = new PelletCluster(pLevel, player, PowderedWeaponType.BLUNDERBUSS, wb >= 1 ? true : false, db >= 1 ? true :false);
+                    int c = pStack.getEnchantmentLevel(ModEnchantments.CHOKE.get());
+                    PelletCluster pc = new PelletCluster(pLevel, player, PowderedWeaponType.BLUNDERBUSS, wb >= 1 ? true : false, db >= 1 ? true :false, c >= 1 ? c : 0);
                     pc.spawnPelletCluster();
                 }
                 pLevel.playSound(
