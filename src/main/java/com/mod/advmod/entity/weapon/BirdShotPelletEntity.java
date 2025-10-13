@@ -27,12 +27,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
+
 
 public class BirdShotPelletEntity extends ThrowableItemProjectile {
 
     private final int BASEDAMAGE = 2;
     private boolean hasWallBreaker = false;
     private boolean hasDragonsBreath = false;
+    private Random smokeRandom = new Random();
     public BirdShotPelletEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -126,9 +129,9 @@ public class BirdShotPelletEntity extends ThrowableItemProjectile {
         for (int i = 0; i < 10; i++) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                     true,
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
+                    this.getX() + smokeRandom.nextFloat(-0.25F, 0.25F),
+                    this.getY() + smokeRandom.nextFloat(-0.25F, 0.25F),
+                    this.getZ() + smokeRandom.nextFloat(-0.25F, 0.25F),
                     0.0,
                     0.0,
                     0.0);
