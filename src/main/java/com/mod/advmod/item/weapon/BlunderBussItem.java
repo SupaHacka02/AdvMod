@@ -42,17 +42,17 @@ public class BlunderBussItem extends PowderedWeaponItem {
                     int c = pStack.getEnchantmentLevel(ModEnchantments.CHOKE.get());
                     PelletCluster pc = new PelletCluster(pLevel, player, PowderedWeaponType.BLUNDERBUSS, wb >= 1 ? true : false, db >= 1 ? true :false, c >= 1 ? c : 0);
                     pc.spawnPelletCluster();
+                    pLevel.playSound(
+                            null,
+                            player.getX(),
+                            player.getY(),
+                            player.getZ(),
+                            SoundEvents.GENERIC_EXPLODE.get(),
+                            SoundSource.PLAYERS,
+                            1.0F,
+                            1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
+                    );
                 }
-                pLevel.playSound(
-                    null,
-                    player.getX(),
-                    player.getY(),
-                    player.getZ(),
-                    SoundEvents.GENERIC_EXPLODE.get(),
-                    SoundSource.PLAYERS,
-                    1.0F,
-                    1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F
-                );
                 if (!player.isCreative()) {
                     for (int k = 0; k < player.getInventory().getContainerSize(); k++) {
                         ItemStack item = player.getInventory().getItem(k);
