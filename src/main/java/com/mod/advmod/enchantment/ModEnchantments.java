@@ -18,13 +18,13 @@ public class ModEnchantments {
             DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, AdvMod.MODID);
     public static final RegistryObject<Enchantment> WALL_BREAKER = ENCHANTMENTS.register(
             "wall_breaker",
-            () -> new WallBreakerEnchantment(Enchantment.definition(ItemTags.WEAPON_ENCHANTABLE, ModTags.blunderbussTag, 1, 1, Enchantment.dynamicCost(1, 11), Enchantment.dynamicCost(21, 11), 4, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
+            () -> new WallBreakerEnchantment(Enchantment.definition(ModTags.Items.BLUNDERBUSS_TAG, 4, 1, Enchantment.dynamicCost(28, 11), Enchantment.dynamicCost(43, 11), 72, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
     public static final RegistryObject<Enchantment> DRAGONS_BREATH = ENCHANTMENTS.register(
             "dragons_breath",
-            () -> new DragonsBreathEnchantment(Enchantment.definition(ItemTags.WEAPON_ENCHANTABLE, ModTags.blunderbussTag, 1, 1, Enchantment.dynamicCost(1, 11), Enchantment.dynamicCost(21, 11), 4, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
+            () -> new DragonsBreathEnchantment(Enchantment.definition(ModTags.Items.BLUNDERBUSS_TAG, 4, 1, Enchantment.dynamicCost(28, 11), Enchantment.dynamicCost(42, 11), 72, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
     public static final RegistryObject<Enchantment> CHOKE = ENCHANTMENTS.register(
             "choke",
-            () -> new ChokeEnchantment(Enchantment.definition(ItemTags.WEAPON_ENCHANTABLE, ModTags.blunderbussTag, 1, 3, Enchantment.dynamicCost(1, 11), Enchantment.dynamicCost(21, 11), 4, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
+            () -> new ChokeEnchantment(Enchantment.definition(ModTags.Items.BLUNDERBUSS_TAG, 1, 3, Enchantment.dynamicCost(5, 11), Enchantment.dynamicCost(21, 11), 8, new EquipmentSlot[] { EquipmentSlot.MAINHAND })));
     public static void register(IEventBus eventBus) {
         ENCHANTMENTS.register(eventBus);
     }
